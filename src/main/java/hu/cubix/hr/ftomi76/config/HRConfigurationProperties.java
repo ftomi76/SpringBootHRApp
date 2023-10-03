@@ -39,71 +39,26 @@ public class HRConfigurationProperties {
 
 		public static class Worktime {
 
-			private float limit1;
-			private float limit2;
-			private float limit3;
+			private float[] limit;
+			private int[] raisepercent;
 
-			private int raisepercent1;
-			private int raisepercent2;
-			private int raisepercent3;
-			private int raisepercent4;
-
-			public float getLimit1() {
-				return limit1;
+			public float[] getLimit() {
+				return limit;
 			}
 
-			public void setLimit1(float limit1) {
-				this.limit1 = limit1;
+			public void setLimit(float[] limit) {
+				this.limit = limit;
 			}
 
-			public float getLimit2() {
-				return limit2;
+			public int[] getRaisepercent() {
+				return raisepercent;
 			}
 
-			public void setLimit2(float limit2) {
-				this.limit2 = limit2;
-			}
-
-			public float getLimit3() {
-				return limit3;
-			}
-
-			public void setLimit3(float limit3) {
-				this.limit3 = limit3;
-			}
-
-			public int getRaisepercent1() {
-				return raisepercent1;
-			}
-
-			public void setRaisepercent1(int raisepercent1) {
-				this.raisepercent1 = raisepercent1;
-			}
-
-			public int getRaisepercent2() {
-				return raisepercent2;
-			}
-
-			public void setRaisepercent2(int raisepercent2) {
-				this.raisepercent2 = raisepercent2;
-			}
-
-			public int getRaisepercent3() {
-				return raisepercent3;
-			}
-
-			public void setRaisepercent3(int raisepercent3) {
-				this.raisepercent3 = raisepercent3;
-			}
-
-			public int getRaisepercent4() {
-				return raisepercent4;
-			}
-
-			public void setRaisepercent4(int raisepercent4) {
-				this.raisepercent4 = raisepercent4;
+			public void setRaisepercent(int[] raisepercent) {
+				this.raisepercent = raisepercent;
 			}
 
 		}
+
 	}
 }

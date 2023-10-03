@@ -19,29 +19,37 @@ public class SmartEmployeeService implements EmployeeService {
 	public int getPayRaisePercent(Employee employee) {
 
 		LocalDateTime now = LocalDateTime.now();
-
+		int noLimits = config.getSmartPayraise().getWorktime().getLimit().length;
 		long worktime = employee.getWorkstarted().until(now, ChronoUnit.YEARS);
 
+		// application.properties arrays - algorithm assumes values to be increasing
+		// order
+		// hr.smartpayraise.worktime.limit=2.5, 5, 10
+		// hr.smartpayraise.worktime.raisepercent1=0, 2, 5, 10
+
 		// get the lowest possible pay-raise based on lowest worktime at the company
-		if (worktime < config.getSmartPayraise().getWorktime().getLimit1()) {
-			return config.getSmartPayraise().getWorktime().getRaisepercent1();
-		}
-		// pay-raise based on worktime between 1st and 2nd limits
-		else if (config.getSmartPayraise().getWorktime().getLimit1() <= worktime
-				&& worktime < config.getSmartPayraise().getWorktime().getLimit2()) {
-			return config.getSmartPayraise().getWorktime().getRaisepercent2();
-		}
-		// pay-raise based on worktime between 2nd and 3rd limits
-		else if (config.getSmartPayraise().getWorktime().getLimit2() <= worktime
-				&& worktime < config.getSmartPayraise().getWorktime().getLimit3()) {
-			return config.getSmartPayraise().getWorktime().getRaisepercent3();
+		if (worktime < config.getSmartPayraise().getWorktime().getLimit()[0]) {
+			return config.getSmartPayraise().getWorktime().getRaisepercent()[0];
 		}
 		// employee deserves highest possible raise based on highest worktime limit
-		else if (config.getSmartPayraise().getWorktime().getLimit3() < worktime) {
-			return config.getSmartPayraise().getWorktime().getRaisepercent4();
-		} else
-			return 0; // not sure if this is ok, but for now it will remain here as it is forever :P
+		else if (config.getSmartPayraise().getWorktime().getLimit()[noLimits-1] <= worktime) {
+			return config.getSmartPayraise().getWorktime().getRaisepercent()[noLimits];
+		}
 
+		for (int i = 1; i < noLimits; ++i) {
+
+			// pay-raise based on worktime between n. and n+1. limits
+			if (/*config.getSmartPayraise().getWorktime().getLimit()[i - 1] <= worktime
+					&&*/ worktime < config.getSmartPayraise().getWorktime().getLimit()[i]) {
+				return config.getSmartPayraise().getWorktime().getRaisepercent()[i];
+			}
+		}
+		return 0;
+		
+		//x<[0]
+		//x>=[max-1]
+		//i=1 [0]<=x && x<[1]
+		//i=2 [1]<=x && x[2]
 	}
 
 }
